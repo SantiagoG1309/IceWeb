@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Guli Sundae</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ff8fab, #ffb6c1);
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .register-container {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            max-width: 350px;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        h2 {
+            color: #ff3e85;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 0.5rem 0;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1rem;
+            border: 2px solid #ff66a3;
+            border-radius: 12px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            font-weight: bold;
+        }
+        button {
+            background: #ff4d94;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 18px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        button:hover {
+            transform: scale(1.15);
+            background: #ff85b3;
+        }
+        p {
+            margin-top: 1rem;
+            color: #ffffff;
+        }
+        a {
+            color: #ff99cc;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .mode-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #ff4d94;
+        }
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+            animation: sparkle 2s infinite ease-in-out;
+            opacity: 0.8;
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        #roleSelect {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div id="modeIndicator" class="mode-indicator">Bienvenido Cliente</div>
+        <br>
+        <h2>Registro</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Usuario" required>
+            <input type="email" name="email" placeholder="Correo" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <select id="roleSelect" name="role" required>
+                <option value="client">Cliente</option>
+                <option value="admin">Administrador</option>
+            </select>
+            <button type="submit">Registrarse</button>
+        </form>
+        <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
+    </div>
+    <script>
+        let currentMode = 'Cliente';
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.altKey && event.key === 'A') {
+                let roleSelect = document.getElementById('roleSelect');
+                if (roleSelect.value === 'client') {
+                    roleSelect.value = 'admin';
+                    currentMode = 'Administrador';
+                } else {
+                    roleSelect.value = 'client';
+                    currentMode = 'Cliente';
+                }
+                document.getElementById('modeIndicator').textContent = 'Bienvenido ' + currentMode;
+            }
+        });
+
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = `${Math.random() * 100}vw`;
+            sparkle.style.top = `${Math.random() * 100}vh`;
+            sparkle.style.animationDuration = `${Math.random() * 2 + 1}s`;
+            sparkle.style.width = `${Math.random() * 6 + 4}px`;
+            sparkle.style.height = sparkle.style.width;
+            sparkle.style.opacity = Math.random() * 0.8 + 0.2;
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 3000);
+        }
+        setInterval(createSparkle, 60);
+    </script>
+</body>
+</html>

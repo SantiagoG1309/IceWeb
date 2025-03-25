@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración - Guli Sundae</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración - Guli Sundae</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .form-container {
+            height: 77%; /* Reduce la altura en un 23% */
+            overflow: visible;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+        .form-group input,
+        .form-group textarea {
+            border: 2px solid black;
+            padding: 0.5rem;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .hover-effect:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .hover-effect:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
+        
+        }
+
+    </style>
+
+</head>
+<body class="bg-gradient-to-r from-green-100 to-green-200 min-h-screen flex flex-col items-center">
+    <header class="text-center py-6 w-full bg-green-500 text-white shadow-lg">
+        <h1 class="text-4xl font-bold">Administración de Inventario</h1>
+    </header>
+    
+    <br>
+
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Formulario para agregar productos -->
+            <div class="border-2 border-black p-6 bg-white rounded-lg shadow-md form-container">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Gestión de Inventario</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.nombre.label_tag }}
+                        {{ form.nombre }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.descripcion.label_tag }}
+                        {{ form.descripcion }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.precio.label_tag }}
+                        {{ form.precio }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.cantidad.label_tag }}
+                        {{ form.cantidad }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.imagen.label_tag }}
+                        {{ form.imagen }}
+                    </div>
+                    <button type="submit" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 mt-4">
+                        Guardar
+                    </button>
+                    <a href="{% url 'catalogo' %}" class="block w-full text-center bg-green-500 text-white p-2 rounded hover:bg-green-600 mt-4">
+                        Ir al Catálogo
+                    </a>
+                </form>
+            </div>
+
+            <!-- Lista de productos existentes -->
+            <div class="border-2 border-black p-6 bg-white rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Productos Existentes</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border-2 border-black">
+                        <thead>
+                            <tr class="bg-gray-200 text-black">
+                                <th class="py-2 px-4 border-2 border-black">Nombre</th>
+                                <th class="py-2 px-4 border-2 border-black">Descripción</th>
+                                <th class="py-2 px-4 border-2 border-black">Precio</th>
+                                <th class="py-2 px-4 border-2 border-black">Cantidad</th>
+                                <th class="py-2 px-4 border-2 border-black">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in productos %}
+                            <tr class="border-t">
+                                <td class="py-2 px-4 border-2 border-black">{{ producto.nombre }}</td>
+                                <td class="py-2 px-4 border-2 border-black">{{ producto.descripcion }}</td>
+                                <td class="py-2 px-4 border-2 border-black">{{ producto.precio }}</td>
+                                <td class="py-2 px-4 border-2 border-black">{{ producto.cantidad }}</td>
+                                <td class="py-2 px-4 border-2 border-black">
+                                    <a href="{% url 'editar_producto' producto.id %}" class="text-blue-500 hover:text-blue-700">Editar</a>
+                                    <a href="{% url 'eliminar_producto' producto.id %}" class="text-red-500 hover:text-red-700 ml-4">Eliminar</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Acceso Oculto a /admin -->
+        <div class="mt-12 text-center">
+            <input type="text" id="adminAccessCode" placeholder="Ingresa CA" class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+            <button id="adminAccessButton" class="ml-2 bg-purple-500 text-white p-2 rounded hover:bg-purple-600 transition duration-300 hidden">admin</button>
+        </div>
+    </div>
+
+    <script>
+        // Lógica para mostrar el botón de acceso a /admin
+        const adminAccessCode = document.getElementById('adminAccessCode');
+        const adminAccessButton = document.getElementById('adminAccessButton');
+
+        adminAccessCode.addEventListener('input', () => {
+            if (adminAccessCode.value === 'SADAT') {
+                adminAccessButton.classList.remove('hidden');
+            } else {
+                adminAccessButton.classList.add('hidden');
+            }
+        });
+
+        adminAccessButton.addEventListener('click', () => {
+            window.location.href = '/admin';
+        });
+    </script>
+
+
+    <script src="{% static 'js/admin.js' %}"></script>
+</body>
+</html>

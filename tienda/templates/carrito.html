@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Carrito</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #d4f8e8, #ffffff);
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            padding: 2rem;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h1 {
+            font-size: 2.8rem;
+            color: #5a8570;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            animation: slideIn 1s ease-in-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .cart-container {
+            background: linear-gradient(to bottom, #ffffff, #e0f2f1);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            max-width: 650px;
+            margin: auto;
+            transition: transform 0.3s ease;
+        }
+        .cart-container:hover {
+            transform: scale(1.02);
+        }
+        .cart-item {
+            background: linear-gradient(to right, #b5e7a0, #a1d6a3);
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+        .cart-item:hover {
+            transform: scale(1.05);
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            color: white;
+            background: linear-gradient(to right, #6d9886, #78c2ad);
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .btn:hover {
+            background: linear-gradient(to right, #5a8570, #66a897);
+            transform: translateY(-3px);
+        }
+        .btn-delete {
+            background: linear-gradient(to right, #ff6b6b, #ff9999);
+            padding: 6px 12px;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        .btn-delete:hover {
+            background: linear-gradient(to right, #d64545, #e87c7c);
+        }
+        .total {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #5a8570;
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <h1>Tu Carrito</h1>
+        <br>
+        <ul>
+            {% for item in items %}
+            <li class="cart-item">
+                <span>{{ item.producto.nombre }} - Cantidad: {{ item.cantidad }} - Precio: ${{ item.producto.precio }} - Total: ${{ item.total }}</span>
+                <a href="{% url 'eliminar_del_carrito' item.id %}" class="btn-delete">Eliminar</a>
+            </li>
+            {% empty %}
+            <p>No tienes productos en tu carrito.</p>
+            {% endfor %}
+            <br>
+        </ul>
+        {% if items %}
+        <p class="total">Total a Pagar: ${{ total_a_pagar }}</p>
+        {% endif %}
+        <a href="{% url 'catalogo' %}" class="btn">Seguir comprando</a>
+        <a href="{% url 'hacer_pedido' %}" class="btn" onclick="window.open('https://api.whatsapp.com/send/?phone=%2B573053592653&text&type=phone_number&app_absent=0', '_blank')">Hacer Pedido</a>
+        <h3>¡Al presionar hacer pedido, confirma tu pedido por medio del chat de WhatsApp, dirección de entrega y medio de pago!</h3>
+    </div>
+</body>
+</html>

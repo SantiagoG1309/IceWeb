@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GULI SUNDAE</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="{% url 'inicio' %}">
+                <img src="{% static 'images/Log0.png' %}" alt="GULI SUNDAE" class="logo-img">
+            </a>
+        </div>
+        <h1 class="title">Bienvenidos a <span class="highlight">GULI SUNDAE</span></h1>
+        <p class="slogan">¡Helados tan ricos que no querrás comerlos!</p>
+    </header>
+
+    <div class="container">
+        <h2 class="subtitle">Deliciosos Helados para Ti</h2>
+        <div class="product-list">
+            <!-- Mostrar productos dinámicamente -->
+            {% for producto in productos %}
+            <div class="product-item">
+                <img src="{% if producto.imagen %}{{ producto.imagen.url }}{% else %}{% static 'productos/default.png' %}{% endif %}" 
+                alt="{{ producto.nombre }}" class="product-img">
+                <h3 class="product-name">{{ producto.nombre }}</h3>
+                <p class="product-description">{{ producto.descripcion }}</p>
+                <p class="product-price">${{ producto.precio }}</p>
+                <p class="product-stock">Disponibles: {{ producto.cantidad }}</p>
+                <button class="btn-make-order" onclick="redirectToLogin()">
+
+                    <a href="#" class="boton-estilo">Agregar al Carrito</a>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p class="footer-text">&copy; 2025 GULI SUNDAE - Todos los derechos reservados</p>
+
+    </footer>
+
+    <script>
+        // Efecto de hover en los productos
+        const productItems = document.querySelectorAll('.product-item');
+        productItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'scale(1.05)';
+                item.style.transition = 'transform 0.3s ease';
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'scale(1)';
+            });
+        });
+
+        // Función para redirigir al login si el usuario no está autenticado
+        function redirectToLogin() {
+            window.location.href = "{% url 'login' %}";
+        }
+    </script>
+    <script src="{% static 'js/animations.js' %}"></script>
+</body>
+</html>
